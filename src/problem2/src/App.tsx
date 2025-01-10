@@ -10,6 +10,9 @@ function App() {
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-4">
+            <h1 className="font-semibold text-3xl md:text-4xl mb-16">
+                Currency Swap
+            </h1>
             <CurrencySwapForm currencyData={currencyData} />
         </main>
     );

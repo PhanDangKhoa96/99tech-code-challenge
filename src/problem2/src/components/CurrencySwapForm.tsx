@@ -6,6 +6,7 @@ import {
     CurrencyData,
     CurrencyOption,
     formatCurrencyOptions,
+    formatRatio,
 } from '@/lib/currencyUtils';
 
 interface CurrencySwapFormProps {
@@ -37,16 +38,17 @@ export function CurrencySwapForm({currencyData}: CurrencySwapFormProps) {
             const fromPrice = fromCurrency.price;
             const toPrice = toCurrency.price;
             const result = (parseFloat(fromAmount) * fromPrice) / toPrice;
-            setToAmount(result.toFixed(6));
+            setToAmount(result.toFixed(2));
         } else {
             setToAmount('');
         }
     }, [fromAmount, fromCurrency, toCurrency]);
 
     return (
-        <div className="w-full max-w-3xl mx-auto p-4">
-            <div className="flex flex-col md:flex-row items-center gap-4">
+        <div className="max-w-7xl mx-auto border border-black shadow-lg rounded-2xl py-16 px-20 w-fit">
+            <div className="flex flex-col md:flex-row py-10 justify-center items-center gap-4">
                 <CurrencyInput
+                    title="From"
                     value={fromAmount}
                     onChange={setFromAmount}
                     currency={fromCurrency}
@@ -59,11 +61,17 @@ export function CurrencySwapForm({currencyData}: CurrencySwapFormProps) {
                     variant="ghost"
                     size="icon"
                     onClick={handleSwapCurrencies}
-                    className="rounded-full h-10 w-10 shrink-0">
-                    <ArrowLeftRight className="h-4 w-4" />
+                    className="rounded-full size-16 shrink-0">
+                    <ArrowLeftRight
+                        width={40}
+                        height={40}
+                        className="w-full h-full"
+                    />
                 </Button>
 
                 <CurrencyInput
+                    isDisabled
+                    title="To"
                     value={toAmount}
                     onChange={setToAmount}
                     currency={toCurrency}
@@ -71,6 +79,16 @@ export function CurrencySwapForm({currencyData}: CurrencySwapFormProps) {
                     currencies={currencyOptions}
                     className="flex-1 w-full"
                 />
+            </div>
+
+            <div className="w-full mt-5 text-lg text-muted-foreground px-4">
+                <span>1 {fromCurrency?.label || '$$$'} = </span>
+                <span className="font-medium">
+                    {formatRatio(
+                        (fromCurrency?.price || 0) / (toCurrency?.price || 1)
+                    )}{' '}
+                    {toCurrency?.label || '$$$'}
+                </span>
             </div>
         </div>
     );
