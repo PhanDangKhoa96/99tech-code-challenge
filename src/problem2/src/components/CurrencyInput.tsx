@@ -63,6 +63,9 @@ export function CurrencyInput({
                                         src={`/tokens/${currency.value}.svg`}
                                         alt={currency.label}
                                         className="w-5 h-5 rounded-full"
+                                        onError={(e) => {
+                                            e.currentTarget.src = '/vite.svg';
+                                        }}
                                     />
                                 )}
                                 <span>{currency?.label || 'Select'}</span>
@@ -93,6 +96,10 @@ export function CurrencyInput({
                                                 src={`/tokens/${option.value}.svg`}
                                                 alt={option.label}
                                                 className="w-5 h-5 rounded-full"
+                                                onError={(e) => {
+                                                    e.currentTarget.src =
+                                                        '/vite.svg';
+                                                }}
                                             />
                                             {option.label}
                                         </Button>

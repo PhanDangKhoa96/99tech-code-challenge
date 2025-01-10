@@ -83,12 +83,15 @@ export function CurrencySwapForm({currencyData}: CurrencySwapFormProps) {
 
             <div className="w-full mt-5 text-lg text-muted-foreground px-4">
                 <span>1 {fromCurrency?.label || '$$$'} = </span>
-                <span className="font-medium">
-                    {formatRatio(
-                        (fromCurrency?.price || 0) / (toCurrency?.price || 1)
-                    )}{' '}
-                    {toCurrency?.label || '$$$'}
-                </span>
+                {toCurrency?.label && (
+                    <span className="font-medium">
+                        {formatRatio(
+                            (fromCurrency?.price || 0) /
+                                (toCurrency?.price || 1)
+                        )}{' '}
+                        {toCurrency?.label || '$$$'}
+                    </span>
+                )}
             </div>
         </div>
     );
